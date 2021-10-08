@@ -1,47 +1,61 @@
 package com.techelevator;
 
-import javax.swing.*;
-import java.util.Scanner;
+import java.util.*;
 
 // Vending Machine Command Line Interface application
 public class VendingMachineCLI {
+	private static VendingMachine vendingMachine;
 
 	public static void main(String[] args) {
-		// Make some objects here!
 
-		int mainMenuSelection = 0;
+		//read products from file
 
-		System.out.println("Welcome to the Vendo-Matic 800");
-		System.out.println("Vendo-Matic 800 is an Umbrella Corp Product");
+		vendingMachine = new VendingMachine(IOHelper.getProductMapFromFile()); // vendingMachine.getProductMap().get("A1").getName();
 
-		mainMenuSelection = mainMenuInterface();
+		String mainMenuSelection;
+		String purchaseMenuSelection;
 
-		if (mainMenuSelection == 3) {
-			System.out.println("Thank you for using the Vendo-Matic 800");
-			System.out.println("Have a fantastic day!");
+		IOHelper.displayIntroMessage();
+
+		mainMenuSelection = mainMenuValidation();
+
+		if (mainMenuSelection.equals("1")) {
+			//display product menu
+			IOHelper.displayProductMap(vendingMachine.getProductMap());
 		}
 
-		// if 1 go to display
-		// if 2 go to purchase
-		// if 3 go to exit
+		if (mainMenuSelection.equals("2")) {
+			purchaseMenuSelection = purchaseMenuValidation();
+		}
 
+		if (mainMenuSelection.equals("3")) {
+			IOHelper.displayExitMessage();
+		}
+}
+
+	public static String mainMenuValidation() {
+		Scanner scanner = new Scanner(System.in);
+		String inputNumber = IOHelper.captureMainMenuSelection(scanner); //capturing measurement input from user using a function call
+
+		while (!isValidInput(inputNumber)) {
+			inputNumber = IOHelper.captureMainMenuSelection(scanner); //verifying that the measurement input is actually a number
+		}
+		return inputNumber;
 	}
 
-	public static int mainMenuInterface() {
-		Scanner input = new Scanner(System.in);
-		int menuSelection = 0;
+	public static String purchaseMenuValidation() {
+		Scanner scanner = new Scanner(System.in);
+		String inputNumber = IOHelper.capturePurchaseMenuSelection(scanner); //capturing measurement input from user using a function call
 
-		//need input verification
-
-		System.out.println("Please select from the following menu options: ");
-		System.out.println("1) Display Vending Machine Items");
-		System.out.println("2) Purchase" );
-		System.out.println("3) Exit");
-		System.out.println("Selection: ");
-
-		menuSelection = input.nextInt();
-
-		return menuSelection;
-
+		while (!isValidInput(inputNumber)) {
+			inputNumber = IOHelper.capturePurchaseMenuSelection(scanner); //verifying that the measurement input is actually a number
+		}
+		return inputNumber;
 	}
+
+	public static boolean isValidInput(String toValidate) {
+		List<String> validation = Arrays.asList("1", "2", "3", "4");
+		return validation.contains(toValidate);
+	}
+
 }
