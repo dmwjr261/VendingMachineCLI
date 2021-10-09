@@ -4,7 +4,15 @@ import java.util.*;
 
 // Vending Machine Command Line Interface application
 public class VendingMachineCLI {
-	private static VendingMachine vendingMachine;
+	public static VendingMachine vendingMachine;
+	private static final String MAIN_MENU_SELECTION_DISPLAY_MENU = "1";
+	private static final String MAIN_MENU_SELECTION_GO_TO_PURCHASE_MENU = "2";
+	private static final String MAIN_MENU_SELECTION_EXIT_PROGRAM = "3";			//variables to make it easier to read
+	private static final String MAIN_MENU_SELECTION_HIDDEN_SALES_REPORT = "4";
+	private static final String PURCHASE_MENU_FEED_MONEY = "1";
+	private static final String PURCHASE_MENU_DISPENSE_PRODUCT = "2";
+	private static final String PURCHASE_MENU_FINISH_TRANSACTION = "1";
+
 
 	public static void main(String[] args) {
 
@@ -19,18 +27,43 @@ public class VendingMachineCLI {
 
 		mainMenuSelection = mainMenuValidation();
 
-		if (mainMenuSelection.equals("1")) {
-			//display product menu
-			IOHelper.displayProductMap(vendingMachine.getProductMap());
+		while (!mainMenuSelection.equals(MAIN_MENU_SELECTION_EXIT_PROGRAM)) {
+
+
+			if (mainMenuSelection.equals(MAIN_MENU_SELECTION_DISPLAY_MENU)) {
+				//display product menu
+				IOHelper.displayProductMap(vendingMachine.getProductMap());
+			}
+
+			if (mainMenuSelection.equals(MAIN_MENU_SELECTION_GO_TO_PURCHASE_MENU)) {
+				purchaseMenuSelection = purchaseMenuValidation();
+
+				while (!purchaseMenuSelection.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
+					// 1 feeds money
+//					if (purchaseMenuSelection.equals(PURCHASE_MENU_FEED_MONEY)) {
+//						vendingMachine.feedMoney();
+//					}
+
+					// 2 dispenses product
+					if (purchaseMenuSelection.equals(PURCHASE_MENU_DISPENSE_PRODUCT)) {
+						vendingMachine.dispenseProduct();
+					}
+
+					// 3 finish transaction
+					purchaseMenuSelection = purchaseMenuValidation();
+				}
+			}
+			if(mainMenuSelection.equals(MAIN_MENU_SELECTION_HIDDEN_SALES_REPORT)) {
+				System.out.println("Sales Report");
+				return;
+			}
+
+			mainMenuSelection = mainMenuValidation();
 		}
 
-		if (mainMenuSelection.equals("2")) {
-			purchaseMenuSelection = purchaseMenuValidation();
-		}
-
-		if (mainMenuSelection.equals("3")) {
-			IOHelper.displayExitMessage();
-		}
+		//dispense change
+		IOHelper.output("Your change is being dispensed");
+		IOHelper.displayExitMessage();
 }
 
 	public static String mainMenuValidation() {

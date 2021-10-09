@@ -39,6 +39,34 @@ public class IOHelper {
         return inputNumber;
     }
 
+    public static String captureProductSelection(Scanner scanner) {
+        String inputNumber = scanner.nextLine();
+        return inputNumber;
+    }
+
+    public static String captureYesOrNo(Scanner scanner) {
+        String inputYOrN = scanner.nextLine();
+        return inputYOrN;
+    }
+
+    public static void displayProductPurchaseMethod(String location) {
+        String type = VendingMachineCLI.vendingMachine.getProductMap().get(location).getType();
+        if (type.equals("Candy")) {
+            output("Munch Munch, Yum!");
+        }
+        if (type.equals("Chip")) {
+            output("Crunch Crunch, Yum!");
+        }
+
+        if (type.equals("Drink")) {
+            output("Glug Glug, Yum!");
+        }
+
+        if (type.equals("Gum")) {
+            output("Chew Chew, Yum!");
+        }
+    }
+
     public static void  displayExitMessage() {
         output("Thank you for using the Vendo-Matic 800");
         output("Have a fantastic day!");
@@ -55,13 +83,11 @@ public class IOHelper {
                 Product product = new Product(parts[0], parts[1], Double.valueOf(parts[2]), parts[3]);
                 productMap.put(product.getLocation(), product);
             }
-
             return productMap;
         } catch(FileNotFoundException e){
             IOHelper.output("The file was not found!");
             return null;
         }
-
     }
 
     public static void displayProductMap(Map<String, Product> productHashMap) {
@@ -69,6 +95,7 @@ public class IOHelper {
             System.out.println(product);
         }
     }
+
     //output sales report to file
 
 }

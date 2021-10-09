@@ -3,6 +3,7 @@ package com.techelevator;
 import java.util.Map;
 
 public class Product {
+
     private final String location;
     private final String name;
     private final double price;
@@ -15,6 +16,10 @@ public class Product {
         this.price = price;
         this.type = type;
         this.quantity = 5;
+    }
+
+    public void subtractInventory() {
+        quantity--;
     }
 
     @Override
