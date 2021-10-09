@@ -55,7 +55,7 @@ public class VendingMachineCLI {
 			}
 			if(mainMenuSelection.equals(MAIN_MENU_SELECTION_HIDDEN_SALES_REPORT)) {
 				System.out.println("Sales Report");
-				return;
+
 			}
 
 			mainMenuSelection = mainMenuValidation();
