@@ -32,9 +32,9 @@ public class VendingMachine {
             IOHelper.output("How much would you like to add to your balance? ");
 
             double moneyInserted = IOHelper.insertMoney(scanner);
-            IOHelper.outputNoBreak(timeStamp + "FEED MONEY: \\" + IOHelper.formatMoney(totalMoney)); //time stamp start
+            IOHelper.outputToFileNoBreak(timeStamp + "FEED MONEY: \\" + IOHelper.formatMoney(totalMoney)); //time stamp start
             totalMoney = totalMoney + moneyInserted;
-            IOHelper.output(" \\" + IOHelper.formatMoney(totalMoney)); //time stamp end
+            IOHelper.outputToFile(" \\" + IOHelper.formatMoney(totalMoney)); //time stamp end
 
             //need to output timestamp to file instead of to user
 
@@ -78,10 +78,10 @@ public class VendingMachine {
                         productToDispense.subtractInventory();
 
                         //subtract cost && time stamp
-                        IOHelper.outputNoBreak(timeStamp + getProductMap().get(productSelection).getName() + " " + getProductMap().get(productSelection).getLocation()); //start time stamp
-                        IOHelper.outputNoBreak(" \\" + IOHelper.formatMoney(totalMoney));
+                        IOHelper.outputToFile(timeStamp + getProductMap().get(productSelection).getName() + " " + getProductMap().get(productSelection).getLocation()); //start time stamp
+                        IOHelper.outputToFileNoBreak(" \\" + IOHelper.formatMoney(totalMoney));
                         totalMoney = totalMoney - getProductMap().get(productSelection).getPrice();
-                        IOHelper.output(" \\" + IOHelper.formatMoney(totalMoney)); //finish time stamp
+                        IOHelper.outputToFile(" \\" + IOHelper.formatMoney(totalMoney)); //finish time stamp
 
                         //output sale to sales log outputs to screen currently need to output to file log
 
@@ -95,6 +95,7 @@ public class VendingMachine {
                 IOHelper.output("That product does not exist");
             }
 
+            IOHelper.output("You have " + IOHelper.formatMoney(totalMoney) + " left.");
             IOHelper.output("Would you like to purchase another item? (y or n)");
             String yesOrNo = IOHelper.captureYesOrNo(scanner);
             yesOrNo = yesOrNo.toLowerCase();
@@ -113,7 +114,9 @@ public class VendingMachine {
         int dimeCounter = 0;
         int nickleCounter = 0;
 
-        while (totalMoney > 0) {
+        IOHelper.outputToFileNoBreak(timeStamp + "GIVE CHANGE: \\" + IOHelper.formatMoney(totalMoney));
+
+        while (totalMoney > 0.0) {
             if (totalMoney >= quarter) {
                 totalMoney -= .25;
                 quarterCounter ++;
@@ -125,6 +128,8 @@ public class VendingMachine {
                 nickleCounter ++;
             }
         }
+
+        IOHelper.outputToFile(" \\" + IOHelper.formatMoney(totalMoney));
         String changeReturned = quarterCounter + " Quarters " + dimeCounter + " Dimes " + nickleCounter  + " Nickles";
         return changeReturned;
     }

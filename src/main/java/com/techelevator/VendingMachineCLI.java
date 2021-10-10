@@ -64,8 +64,9 @@ public class VendingMachineCLI {
 		//dispense change
 		IOHelper.output("You have " + IOHelper.formatMoney(vendingMachine.getTotalMoney()) + " left.");
 		IOHelper.output("Your change is being dispensed");
-		IOHelper.displayExitMessage();
 		vendingMachine.calculateChange();
+		IOHelper.displayExitMessage();
+
 }
 
 	public static String mainMenuValidation() {

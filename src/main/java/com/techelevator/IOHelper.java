@@ -1,9 +1,6 @@
 package com.techelevator;
 
-import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -126,12 +123,24 @@ public class IOHelper {
 
     //output sales report to file
     public static void outputToFile (String lineToOutput) {
-
-        try (PrintWriter writer = new PrintWriter("auditlog.txt")) {
-
-
+        try(FileWriter fWriter = new FileWriter("auditlog.txt", true);
+            PrintWriter writer = new PrintWriter(fWriter)) {
+        writer.println(lineToOutput);
         } catch(FileNotFoundException e) {
-            IOHelper.output("The file was not found!");
+            System.out.println("File not found!");
+        } catch(IOException e) {
+            System.out.println("IOException!");
+        }
+    }
+
+    public static void outputToFileNoBreak (String lineToOutput) {
+        try(FileWriter fWriter = new FileWriter("auditlog.txt", true);
+            PrintWriter writer = new PrintWriter(fWriter)) {
+            writer.print(lineToOutput);
+        } catch(FileNotFoundException e) {
+            System.out.println("File not found!");
+        } catch(IOException e) {
+            System.out.println("IOException!");
         }
     }
 }
