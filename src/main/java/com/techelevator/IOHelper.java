@@ -1,13 +1,20 @@
 package com.techelevator;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class IOHelper {
 
     public static void output(String outputString) {
         System.out.println(outputString);
+    }
+
+    public static void outputNoBreak(String outputString) {
+        System.out.print(outputString);
     }
 
     public static void displayIntroMessage() {
@@ -27,13 +34,13 @@ public class IOHelper {
         return inputNumber;
     }
 
-    public static String capturePurchaseMenuSelection(Scanner scanner) {
+    public static String capturePurchaseMenuSelection(Scanner scanner, double totalMoney) {
         output("*****Purchase Menu*****");
         output("Please select from the following menu options: ");
         output("1) Feed Money");
         output("2) Select Product" );
         output("3) Finish Transaction");
-        output("Current Money Provided: " + "$"); //need to call the amount of money feed in
+        output("Current Money Provided: " + IOHelper.formatMoney(totalMoney)); //need to call the amount of money feed in
         output("Selection: ");
         String inputNumber = scanner.nextLine();
         return inputNumber;
@@ -46,7 +53,18 @@ public class IOHelper {
 
     public static String captureYesOrNo(Scanner scanner) {
         String inputYOrN = scanner.nextLine();
+
+        while (!isValidYOrN(inputYOrN)) {
+            IOHelper.output(inputYOrN + " is not a y or n.  Reenter y or n");
+            inputYOrN = IOHelper.captureYesOrNo(scanner); //verifying that the measurement input is actually a y or n
+        }
         return inputYOrN;
+    }
+
+    public static double insertMoney (Scanner scanner) {
+        String inputMoney = scanner.nextLine();
+        double moneyInserted = Double.parseDouble(inputMoney);
+        return moneyInserted;
     }
 
     public static void displayProductPurchaseMethod(String location) {
@@ -72,9 +90,9 @@ public class IOHelper {
         output("Have a fantastic day!");
     }
 
-    public static HashMap<String, Product> getProductMapFromFile() {
+    public static TreeMap<String, Product> getProductMapFromFile() {
         File vendingMachineProductList = new File("vendingmachine.csv");
-        HashMap<String,Product> productMap = new HashMap<>();
+        TreeMap<String,Product> productMap = new TreeMap<>();
 
         try (Scanner fileReader = new Scanner(vendingMachineProductList)) {
             while (fileReader.hasNextLine()) {
@@ -96,6 +114,24 @@ public class IOHelper {
         }
     }
 
-    //output sales report to file
+    public static String formatMoney (double money) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        return formatter.format(money);
+    }
 
+    public static boolean isValidYOrN(String toValidate) {
+        List<String> validation = Arrays.asList("y", "Y", "n", "N");
+        return validation.contains(toValidate);
+    }
+
+    //output sales report to file
+    public static void outputToFile (String lineToOutput) {
+
+        try (PrintWriter writer = new PrintWriter("auditlog.txt")) {
+
+
+        } catch(FileNotFoundException e) {
+            IOHelper.output("The file was not found!");
+        }
+    }
 }

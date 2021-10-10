@@ -1,15 +1,15 @@
 package com.techelevator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class FeedingMoney {
 
 
-
     public static void main(String[] args) {
-
 
 
         //I think its supposed to look like this
@@ -24,26 +24,20 @@ public class FeedingMoney {
 //            System.out.println("There is no data to print");
 
 
-
-
-
-
 //open and print to the audit log
 
 
-    try (PrintWriter dataOutput = new PrintWriter(AuditLog)) {
-
-
-    } catch (FileNotFoundException e) {
-
-        System.err.println("Can not open the file for writing.");
-    }
-
-    try (PrintWriter dataOutput = new PrintWriter(new FileOutputStream(AuditLog, true))) {
-
-
-
-
-
-    }
+//        try (PrintWriter dataOutput = new PrintWriter(AuditLog)) {
+//
+//
+//        } catch (FileNotFoundException e) {
+//
+//            System.err.println("Can not open the file for writing.");
+//        }
+//
+//        try (PrintWriter dataOutput = new PrintWriter(new FileOutputStream(AuditLog, true))) {
+//
+//
+//        }
+  }
 }

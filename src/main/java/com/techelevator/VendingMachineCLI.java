@@ -11,7 +11,7 @@ public class VendingMachineCLI {
 	private static final String MAIN_MENU_SELECTION_HIDDEN_SALES_REPORT = "4";
 	private static final String PURCHASE_MENU_FEED_MONEY = "1";
 	private static final String PURCHASE_MENU_DISPENSE_PRODUCT = "2";
-	private static final String PURCHASE_MENU_FINISH_TRANSACTION = "1";
+	private static final String PURCHASE_MENU_FINISH_TRANSACTION = "3";
 
 
 	public static void main(String[] args) {
@@ -40,9 +40,9 @@ public class VendingMachineCLI {
 
 				while (!purchaseMenuSelection.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
 					// 1 feeds money
-//					if (purchaseMenuSelection.equals(PURCHASE_MENU_FEED_MONEY)) {
-//						vendingMachine.feedMoney();
-//					}
+					if (purchaseMenuSelection.equals(PURCHASE_MENU_FEED_MONEY)) {
+						vendingMachine.feedMoney();
+					}
 
 					// 2 dispenses product
 					if (purchaseMenuSelection.equals(PURCHASE_MENU_DISPENSE_PRODUCT)) {
@@ -62,8 +62,10 @@ public class VendingMachineCLI {
 		}
 
 		//dispense change
+		IOHelper.output("You have " + IOHelper.formatMoney(vendingMachine.getTotalMoney()) + " left.");
 		IOHelper.output("Your change is being dispensed");
 		IOHelper.displayExitMessage();
+		vendingMachine.calculateChange();
 }
 
 	public static String mainMenuValidation() {
@@ -78,10 +80,10 @@ public class VendingMachineCLI {
 
 	public static String purchaseMenuValidation() {
 		Scanner scanner = new Scanner(System.in);
-		String inputNumber = IOHelper.capturePurchaseMenuSelection(scanner); //capturing measurement input from user using a function call
+		String inputNumber = IOHelper.capturePurchaseMenuSelection(scanner, vendingMachine.getTotalMoney()); //capturing measurement input from user using a function call
 
 		while (!isValidInput(inputNumber)) {
-			inputNumber = IOHelper.capturePurchaseMenuSelection(scanner); //verifying that the measurement input is actually a number
+			inputNumber = IOHelper.capturePurchaseMenuSelection(scanner, vendingMachine.getTotalMoney()); //verifying that the measurement input is actually a number
 		}
 		return inputNumber;
 	}
