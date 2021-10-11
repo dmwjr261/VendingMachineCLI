@@ -37,7 +37,7 @@ public class IOHelper {
         output("1) Feed Money");
         output("2) Select Product" );
         output("3) Finish Transaction");
-        output("Current Money Provided: " + IOHelper.formatMoney(totalMoney)); //need to call the amount of money feed in
+        output("Current Money Provided: " + IOHelper.formatMoney(totalMoney));
         output("Selection: ");
         String inputNumber = scanner.nextLine();
         return inputNumber;
@@ -64,11 +64,12 @@ public class IOHelper {
         return moneyInserted;
     }
 
-    public static void displayProductPurchaseMethod(String location) {
+    public static void displayProductPurchaseMessage(String location) {
         String type = VendingMachineCLI.vendingMachine.getProductMap().get(location).getType();
         if (type.equals("Candy")) {
             output("Munch Munch, Yum!");
         }
+
         if (type.equals("Chip")) {
             output("Crunch Crunch, Yum!");
         }
@@ -80,11 +81,12 @@ public class IOHelper {
         if (type.equals("Gum")) {
             output("Chew Chew, Yum!");
         }
+
     }
 
     public static void  displayExitMessage() {
         output("Thank you for using the Vendo-Matic 800");
-        output("Have a fantastic day!");
+        output("Umbrella Corp: Our business is Life itself");
     }
 
     public static TreeMap<String, Product> getProductMapFromFile() {

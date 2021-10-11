@@ -1,9 +1,6 @@
 package com.techelevator;
 
-import java.util.Map;
-
 public class Product {
-
     private final String location;
     private final String name;
     private final double price;

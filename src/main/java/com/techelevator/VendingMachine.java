@@ -36,8 +36,6 @@ public class VendingMachine {
             totalMoney = totalMoney + moneyInserted;
             IOHelper.outputToFile(" \\" + IOHelper.formatMoney(totalMoney)); //time stamp end
 
-            //need to output timestamp to file instead of to user
-
             IOHelper.output("Your current balance is " + IOHelper.formatMoney(totalMoney));
 
             IOHelper.output("Would you like to add more money? ");
@@ -72,18 +70,16 @@ public class VendingMachine {
                     if (totalMoney > getProductMap().get(productSelection).getPrice()) {
 
                         IOHelper.output("Please retrieve your " + productToDispense.getName() + " from the bin below!");
-                        IOHelper.displayProductPurchaseMethod(productSelection);
+                        IOHelper.displayProductPurchaseMessage(productSelection);
 
                         //subtract inventory
                         productToDispense.subtractInventory();
 
                         //subtract cost && time stamp
-                        IOHelper.outputToFile(timeStamp + getProductMap().get(productSelection).getName() + " " + getProductMap().get(productSelection).getLocation()); //start time stamp
+                        IOHelper.outputToFileNoBreak(timeStamp + getProductMap().get(productSelection).getName() + " " + getProductMap().get(productSelection).getLocation()); //start time stamp
                         IOHelper.outputToFileNoBreak(" \\" + IOHelper.formatMoney(totalMoney));
                         totalMoney = totalMoney - getProductMap().get(productSelection).getPrice();
                         IOHelper.outputToFile(" \\" + IOHelper.formatMoney(totalMoney)); //finish time stamp
-
-                        //output sale to sales log outputs to screen currently need to output to file log
 
                     } else {
                         IOHelper.output("You do not have enough money to purchase " + getProductMap().get(productSelection).getName());
@@ -116,7 +112,7 @@ public class VendingMachine {
 
         IOHelper.outputToFileNoBreak(timeStamp + "GIVE CHANGE: \\" + IOHelper.formatMoney(totalMoney));
 
-        while (totalMoney > 0.0) {
+        while (totalMoney > 0.04) {
             if (totalMoney >= quarter) {
                 totalMoney -= .25;
                 quarterCounter ++;
@@ -130,7 +126,7 @@ public class VendingMachine {
         }
 
         IOHelper.outputToFile(" \\" + IOHelper.formatMoney(totalMoney));
-        String changeReturned = quarterCounter + " Quarters " + dimeCounter + " Dimes " + nickleCounter  + " Nickles";
+        String changeReturned = quarterCounter + " Quarter(s) " + dimeCounter + " Dime(s) " + nickleCounter  + " Nickle(s)";
         return changeReturned;
     }
 }

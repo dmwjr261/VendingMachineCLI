@@ -31,30 +31,30 @@ public class VendingMachineCLI {
 
 
 			if (mainMenuSelection.equals(MAIN_MENU_SELECTION_DISPLAY_MENU)) {
-				//display product menu
+				// 1M display product menu
 				IOHelper.displayProductMap(vendingMachine.getProductMap());
 			}
-
+				// 2M goes to purchase menu
 			if (mainMenuSelection.equals(MAIN_MENU_SELECTION_GO_TO_PURCHASE_MENU)) {
 				purchaseMenuSelection = purchaseMenuValidation();
 
 				while (!purchaseMenuSelection.equals(PURCHASE_MENU_FINISH_TRANSACTION)) {
-					// 1 feeds money
+					// 1P feeds money
 					if (purchaseMenuSelection.equals(PURCHASE_MENU_FEED_MONEY)) {
 						vendingMachine.feedMoney();
 					}
 
-					// 2 dispenses product
+					// 2P dispenses product
 					if (purchaseMenuSelection.equals(PURCHASE_MENU_DISPENSE_PRODUCT)) {
 						vendingMachine.dispenseProduct();
 					}
 
-					// 3 finish transaction
 					purchaseMenuSelection = purchaseMenuValidation();
 				}
 			}
 			if(mainMenuSelection.equals(MAIN_MENU_SELECTION_HIDDEN_SALES_REPORT)) {
 				System.out.println("Sales Report");
+				// bonus do last if time permits
 
 			}
 
@@ -64,27 +64,27 @@ public class VendingMachineCLI {
 		//dispense change
 		IOHelper.output("You have " + IOHelper.formatMoney(vendingMachine.getTotalMoney()) + " left.");
 		IOHelper.output("Your change is being dispensed");
-		vendingMachine.calculateChange();
+		IOHelper.output(vendingMachine.calculateChange());
 		IOHelper.displayExitMessage();
 
 }
 
 	public static String mainMenuValidation() {
 		Scanner scanner = new Scanner(System.in);
-		String inputNumber = IOHelper.captureMainMenuSelection(scanner); //capturing measurement input from user using a function call
+		String inputNumber = IOHelper.captureMainMenuSelection(scanner); //capturing input from user
 
 		while (!isValidInput(inputNumber)) {
-			inputNumber = IOHelper.captureMainMenuSelection(scanner); //verifying that the measurement input is actually a number
+			inputNumber = IOHelper.captureMainMenuSelection(scanner); //verifying that the input is a usable number
 		}
 		return inputNumber;
 	}
 
 	public static String purchaseMenuValidation() {
 		Scanner scanner = new Scanner(System.in);
-		String inputNumber = IOHelper.capturePurchaseMenuSelection(scanner, vendingMachine.getTotalMoney()); //capturing measurement input from user using a function call
+		String inputNumber = IOHelper.capturePurchaseMenuSelection(scanner, vendingMachine.getTotalMoney()); //capturing input from user
 
 		while (!isValidInput(inputNumber)) {
-			inputNumber = IOHelper.capturePurchaseMenuSelection(scanner, vendingMachine.getTotalMoney()); //verifying that the measurement input is actually a number
+			inputNumber = IOHelper.capturePurchaseMenuSelection(scanner, vendingMachine.getTotalMoney()); //verifying that the input is a usable number
 		}
 		return inputNumber;
 	}
